@@ -10,7 +10,7 @@ class Date {
 
   /* Put your private data fields here. */
     private int m_Year, m_Month, m_Day;
-    private static boolean isExceptionOpen = true;
+
   /** Constructs a date with the given month, day and year.   If the date is
    *  not valid, the entire program will halt with an error message.
    *  @param month is a month, numbered in the range 1...12.
@@ -20,7 +20,7 @@ class Date {
   public Date(int month, int day, int year) {
       if(!isValidDate(month, day, year))
       {
-          processException();
+          System.exit(0);
       }
       m_Year = year;
       m_Month = month;
@@ -38,7 +38,7 @@ class Date {
         if(tmpStrSet.length != 3)
         {
             System.out.println("Please check your date format--example: 5/13/2012");
-            processException();
+            System.exit(0);
         }
 
         Pattern pattern = Pattern.compile("[0-9]*");
@@ -47,7 +47,7 @@ class Date {
             if(!pattern.matcher(tmpStrSet[i]).matches())
             {
                 System.out.println("month/day/year should be pure int type");
-                processException();
+                System.exit(0);
             }
         }
 
@@ -56,14 +56,14 @@ class Date {
         m_Year = Integer.parseInt(tmpStrSet[2]);
         if(!isValidDate(m_Month, m_Day, m_Year))
         {
-            processException();
+            System.exit(0);
         }
         else
         {
             if(m_Year > 9999)
             {
                 System.out.println("Year should be not larger than 9999");
-                processException();
+                System.exit(0);
             }
         }
   }
@@ -261,23 +261,8 @@ class Date {
     }
 
 
-    private static void processException()
-    {
-        if(isExceptionOpen)
-        {
-            System.exit(0);
-        }
-    }
 
-    public static void openException()
-    {
-        isExceptionOpen = true;
-    }
 
-    public static void closeException()
-    {
-        isExceptionOpen = false;
-    }
   public static void main(String[] argv) {
     System.out.println("\nTesting constructors.");
     Date d1 = new Date(1, 1, 1);
@@ -335,7 +320,7 @@ class Date {
                        d3.difference(d4));
     System.out.println(d5 + " - " + d4  + " should be 48762: " + 
                        d5.difference(d4));
-
+    Date d15 = new Date("");
       // Date.closeException();
   //  Date d10 = new Date("8/3a/2110");
    // Date d11 = new Date("8/3.1/2110");
