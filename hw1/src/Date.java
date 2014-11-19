@@ -133,12 +133,12 @@ class Date {
       }
       if(day > daysInMonth(month, year))
       {
-          System.out.println("Valid month:"+ String.valueOf(day));
+          System.out.println("Valid day:"+ String.valueOf(day));
           return false;
       }
       if(year < 1)
       {
-          System.out.println("Valid month:"+ String.valueOf(year));
+          System.out.println("Valid year:"+ String.valueOf(year));
           return false;
       }
 
