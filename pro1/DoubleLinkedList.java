@@ -29,7 +29,7 @@ public class DoubleLinkedList {
 
     public boolean IsEmpty()
     {
-        return (m_size==0);
+        return (getDoubleLinkedListSize() == 0);
     }
 
     public DNode getFirst()
@@ -103,6 +103,17 @@ public class DoubleLinkedList {
 
     public int removeNode(DNode node)
     {
+        if((node == m_header)||(node == m_tailer))
+            return 1;
+        node.getPrev().setNext(node.getNext());
+        node.getNext().setPrev(node.getPrev());
+        node.setNext(null);
+        node.setPrev(null);
+        return 0;
+    }
+    /*
+    public int removeNode(DNode node)
+    {
         DNode curNode = m_header.getNext();
         while(curNode != m_tailer)
         {
@@ -118,7 +129,7 @@ public class DoubleLinkedList {
 
         return 1;
     }
-
+*/
     public void addFirst(DNode node)
     {
         addAfter(m_header, node);

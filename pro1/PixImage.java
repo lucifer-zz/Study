@@ -77,9 +77,9 @@ public class PixImage {
                                                  {2, 0, -2},
                                                  {1, 0, -1}};
 
-    private final static short[][] s_gyMatrix = {{1, 2, 1},
-                                                 {0, 0, 0},
-                                                 {1, 2, 1}};
+    private final static short[][] s_gyMatrix = {{1,  2,  1},
+                                                 {0,  0,  0},
+                                                 {-1, -2, -1}};
 
   /**
    * PixImage() constructs an empty PixImage with a specified width and height.
@@ -379,29 +379,32 @@ public class PixImage {
 
   private int CalEnergy(int x, int y)
   {
-      int i, j;
+      int i, j, m = 0, n = 0;
       int energy = 0;
       short[][] tmpredarray = new short[3][3];
       short[][] tmpgreenarray = new short[3][3];
       short[][] tmpbluearray = new short[3][3];
       for(i = x - 1; i <= x + 1; i++)
       {
-          for(j = y - 1; j < y + 1; j++)
+          for(j = y - 1; j <= y + 1; j++)
           {
               if(-1 != getRed(i ,j))
               {
-                  tmpredarray[i][j] = getRed(i, j);
-                  tmpgreenarray[i][j] = getGreen(i, j);
-                  tmpbluearray[i][j] = getBlue(i, j);
+                  tmpredarray[n][m] = getRed(i, j);
+                  tmpgreenarray[n][m]= getGreen(i, j);
+                  tmpbluearray[n][m] = getBlue(i, j);
               }
               else
               {
                   Pixel refelctingpixel = GetReflectingPixel(i ,j);
-                  tmpredarray[i][j] = refelctingpixel.getRed();
-                  tmpgreenarray[i][j] = refelctingpixel.getGreen();
-                  tmpbluearray[i][j] = refelctingpixel.getBlue();
+                  tmpredarray[n][m] = refelctingpixel.getRed();
+                  tmpgreenarray[n][m] = refelctingpixel.getGreen();
+                  tmpbluearray[n][m] = refelctingpixel.getBlue();
               }
+              n++;
           }
+          n = 0;
+          m++;
       }
 
      int redgradientx = 0, greengradientx = 0, bluegradientx = 0, redgradienty = 0, greengradienty = 0, bluegradienty = 0;
@@ -419,11 +422,9 @@ public class PixImage {
          }
 
      }
-
-
       energy = (int)(redgradientx * redgradientx + redgradienty * redgradienty +
                greengradientx * greengradientx + greengradienty * greengradienty +
-               bluegradientx * bluegradientx + bluegradientx * bluegradientx);
+               bluegradientx * bluegradientx + bluegradienty * bluegradienty);
 
       return energy;
   }
@@ -447,7 +448,7 @@ public class PixImage {
           y = m_imageheight - 1;
       }
 
-      return m_pixelset[x][y];
+      return m_pixelset[y][x];
 
 
   }
@@ -545,6 +546,7 @@ public class PixImage {
     // Be forwarned that when you write arrays directly in Java as below,
     // each "row" of text is a column of your image--the numbers get
     // transposed.
+    short val = mag2gray(163200);
     PixImage image1 = array2PixImage(new int[][] { { 0, 10, 240 },
                                                    { 30, 120, 250 },
                                                    { 80, 250, 255 } });

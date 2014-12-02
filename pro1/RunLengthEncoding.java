@@ -370,11 +370,12 @@ public class RunLengthEncoding implements Iterable {
             //middle
             if((position > (num - curnode.getValue()))&&(position < num))
             {
-                curnode.setValue(curnode.getValue() - (num - position + 1));
                 positionnode  = new DNode(1, red, green, blue, null, null);
                 afterhalfnode = new DNode(num - position, curnode.getRed(), curnode.getGreen(), curnode.getBlue(), null, null);
                 m_runlengthsencoding.addAfter(curnode, positionnode);
                 m_runlengthsencoding.addAfter(positionnode, afterhalfnode);
+                curnode.setValue(curnode.getValue() - (num - position + 1));
+
             }
             else if(position == num -curnode.getValue())
             {
@@ -383,6 +384,7 @@ public class RunLengthEncoding implements Iterable {
                     if((curnode.getPrev().getRed() == red)&&(curnode.getPrev().getGreen() == green)&&(curnode.getPrev().getBlue() == blue))
                     {
                         curnode.getPrev().setValue(curnode.getPrev().getValue() + 1);
+
                     }
                     else
                     {
@@ -415,7 +417,9 @@ public class RunLengthEncoding implements Iterable {
                     positionnode  = new DNode(1, red, green, blue, null, null);
                     m_runlengthsencoding.addLast(positionnode);
                 }
+                curnode.setValue(curnode.getValue() - 1);
             }
+
         }
         else
         {
@@ -424,26 +428,28 @@ public class RunLengthEncoding implements Iterable {
                 curnode.getPrev().setValue(curnode.getPrev().getValue() + 1);
                 m_runlengthsencoding.addAfter(curnode.getPrev(), curnode.getNext());
 
-                if((curnode.getPrev().getRed() == curnode.getNext().getRed())&&
-                        (curnode.getPrev().getGreen() == curnode.getNext().getGreen())&&
-                        (curnode.getPrev().getBlue() == curnode.getNext().getBlue()))
+                DNode tmpNode = curnode.getPrev();
+                m_runlengthsencoding.removeNode(curnode);
+                curnode = tmpNode;
+                if((curnode.getRed() == curnode.getNext().getRed())&&
+                        (curnode.getGreen() == curnode.getNext().getGreen())&&
+                        (curnode.getBlue() == curnode.getNext().getBlue()))
                 {
-                    curnode.getPrev().setValue(curnode.getPrev().getValue() + curnode.getNext().getValue());
-                    m_runlengthsencoding.addAfter(curnode.getPrev(), curnode.getNext().getNext());
+                    curnode.setValue(curnode.getValue() + curnode.getNext().getValue());
+                    m_runlengthsencoding.removeNode(curnode.getNext());
                 }
             }
             else if((curnode.getNext().getRed() == red)&&(curnode.getNext().getGreen() == green)&&(curnode.getNext().getBlue() == blue))
             {
                 curnode.getNext().setValue(curnode.getNext().getValue() + 1);
-                m_runlengthsencoding.addAfter(curnode.getPrev(), curnode.getNext());
+                m_runlengthsencoding.removeNode(curnode);
             }
             else
             {
                 positionnode  = new DNode(1, red, green, blue, null, null);
-                m_runlengthsencoding.addAfter(curnode, positionnode);
+                m_runlengthsencoding.addAfter(curnode.getPrev(), positionnode);
+                m_runlengthsencoding.removeNode(curnode);
             }
-
-
         }
     }
 
