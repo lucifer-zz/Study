@@ -368,7 +368,7 @@ public class RunLengthEncoding implements Iterable {
         if(curnode.getValue() != 1)
         {
             //middle
-            if((position > (num - curnode.getValue()))&&(position < num))
+            if((position > (num - curnode.getValue() + 1))&&(position < num))
             {
                 positionnode  = new DNode(1, red, green, blue, null, null);
                 afterhalfnode = new DNode(num - position, curnode.getRed(), curnode.getGreen(), curnode.getBlue(), null, null);
@@ -377,7 +377,7 @@ public class RunLengthEncoding implements Iterable {
                 curnode.setValue(curnode.getValue() - (num - position + 1));
 
             }
-            else if(position == num -curnode.getValue())
+            else if(position == num -curnode.getValue() + 1)
             {
                 if(curnode.getPrev() != m_runlengthsencoding.getHeader())
                 {
@@ -397,6 +397,7 @@ public class RunLengthEncoding implements Iterable {
                     positionnode  = new DNode(1, red, green, blue, null, null);
                     m_runlengthsencoding.addFirst(positionnode);
                 }
+                curnode.setValue(curnode.getValue() - 1);
             }
             else
             {
@@ -425,10 +426,8 @@ public class RunLengthEncoding implements Iterable {
         {
             if((curnode.getPrev().getRed() == red)&&(curnode.getPrev().getGreen() == green)&&(curnode.getPrev().getBlue() == blue))
             {
-                curnode.getPrev().setValue(curnode.getPrev().getValue() + 1);
-                m_runlengthsencoding.addAfter(curnode.getPrev(), curnode.getNext());
-
                 DNode tmpNode = curnode.getPrev();
+                curnode.getPrev().setValue(curnode.getPrev().getValue() + 1);
                 m_runlengthsencoding.removeNode(curnode);
                 curnode = tmpNode;
                 if((curnode.getRed() == curnode.getNext().getRed())&&
