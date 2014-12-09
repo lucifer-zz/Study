@@ -350,6 +350,8 @@ public class RunLengthEncoding implements Iterable {
     long len = m_runlengthsencoding.getDoubleLinkedListSize();
     int i, num = 0;
     DNode curnode = m_runlengthsencoding.getFirst();
+
+    //here we calculate the location of node, two edge index info
     for(i = 0; i < len; i++)
     {
         num += curnode.getValue();
@@ -368,6 +370,11 @@ public class RunLengthEncoding implements Iterable {
         if(curnode.getValue() != 1)
         {
             //middle
+            /* the pixel we wanna change is located in the middle of node-set,
+            *  we need divided a node into three nodes, the pre node num, should be the num from the starter to the
+             *  location index, so should be num - position + 1
+             *  the next node num, simply minus the current location, so should be num - position
+            * */
             if((position > (num - curnode.getValue() + 1))&&(position < num))
             {
                 positionnode  = new DNode(1, red, green, blue, null, null);
@@ -377,6 +384,12 @@ public class RunLengthEncoding implements Iterable {
                 curnode.setValue(curnode.getValue() - (num - position + 1));
 
             }
+            /*
+            *   we locate node, and find it locates at the head of node, we need consider about the relationship with the former node.
+            *   we need merge this pixel info into the former node if primary color info is same as former node after we change it.
+            *   if not, we just simply add a new pixel node
+            *   do not forget to change the value of current node
+            * */
             else if(position == num -curnode.getValue() + 1)
             {
                 if(curnode.getPrev() != m_runlengthsencoding.getHeader())
@@ -399,6 +412,12 @@ public class RunLengthEncoding implements Iterable {
                 }
                 curnode.setValue(curnode.getValue() - 1);
             }
+            /*
+            *   we locate node, and find it locates at the end of node, we need consider about the relationship with the later node.
+            *   we need merge this pixel info into the later node if primary color info is same as later node after we change it.
+            *   if not, we just simply add a new pixel node
+            *   do not forget to change the value of current node
+            * */
             else
             {
                 if(curnode.getNext() != m_runlengthsencoding.getTailer())
@@ -424,6 +443,12 @@ public class RunLengthEncoding implements Iterable {
         }
         else
         {
+            /*
+            *   we locate node, and find that it is isolated node, we need consider a lot.
+            *   we need merge it into former node it has same color info with former node after we change it.
+            *   and remove it meantime.
+            *   certainly we also need do same process with later node.
+            * */
             if((curnode.getPrev().getRed() == red)&&(curnode.getPrev().getGreen() == green)&&(curnode.getPrev().getBlue() == blue))
             {
                 DNode tmpNode = curnode.getPrev();
@@ -443,6 +468,10 @@ public class RunLengthEncoding implements Iterable {
                 curnode.getNext().setValue(curnode.getNext().getValue() + 1);
                 m_runlengthsencoding.removeNode(curnode);
             }
+            /*
+            *   the node we change is still different former and later node, we need remove old node, and add new node.
+            *   here we defined a node as a value object, unchangable
+            * */
             else
             {
                 positionnode  = new DNode(1, red, green, blue, null, null);
