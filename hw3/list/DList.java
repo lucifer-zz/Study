@@ -82,10 +82,11 @@ public class DList {
    */
   public void insertFront(Object item) {
     // Your solution here.
-      DListNode newnode = newNode(item, head, head.next);
-      head.next.prev = newnode;
-      head.next = newnode;
-      size++;
+      if(item != null)
+      {
+          insertAfter(item, head);
+      }
+
   }
 
   /**
@@ -95,10 +96,10 @@ public class DList {
    */
   public void insertBack(Object item) {
     // Your solution here.
-      DListNode newnode = newNode(item, head.prev, head);
-      head.prev.next = newnode;
-      head.prev = newnode;
-      size++;
+      if(item != null)
+      {
+          insertBefore(item, head);
+      }
   }
 
   /**
@@ -178,7 +179,7 @@ public class DList {
    */
   public void insertAfter(Object item, DListNode node) {
     // Your solution here.
-      if(node != null)
+      if((node != null)&&(item != null))
       {
           DListNode newnode = newNode(item, node, node.next);
           node.next.prev = newnode;
@@ -196,7 +197,7 @@ public class DList {
    */
   public void insertBefore(Object item, DListNode node) {
     // Your solution here.
-      if(node != null)
+      if((node != null)&&(item != null))
       {
           DListNode newnode = newNode(item, node.prev, node);
           node.prev.next = newnode;

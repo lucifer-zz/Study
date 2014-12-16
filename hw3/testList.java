@@ -49,7 +49,8 @@ public class testList {
 
         //LockDList test
         System.out.println("Now start locklist test....");
-        LockDList locklist = new LockDList();
+       // LockDList locklist = new LockDList();
+        DList locklist = new LockDList();
         System.out.println("locklist size should be 0, in fact it is " + locklist.length());
 
         size = 9;
@@ -77,7 +78,8 @@ public class testList {
         {
             if(curlocknode.item.equals(item))
             {
-                locklist.lockNode(curlocknode);
+
+                ((LockDList)locklist).lockNode(curlocknode);
                 break;
             }
             curlocknode = locklist.next(curlocknode);
