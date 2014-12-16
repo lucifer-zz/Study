@@ -74,7 +74,7 @@ public class Set {
               }
           }catch (InvalidNodeException e)
           {
-              System.out.println("invalid node exception.");
+              e.printStackTrace();
           }
 
       }
@@ -112,7 +112,7 @@ public class Set {
               }
               catch (InvalidNodeException e)
               {
-                  System.out.println("invalid node exception.");
+                  e.printStackTrace();
               }
 
           }
@@ -140,7 +140,7 @@ public class Set {
               }
           }catch (InvalidNodeException e)
           {
-              System.out.println("invalid node exception.");
+              e.printStackTrace();
           }
 
 
@@ -153,7 +153,7 @@ public class Set {
               node2 = node2.next();
           }catch (InvalidNodeException e)
           {
-              System.out.println("invalid node exception.");
+              e.printStackTrace();
           }
 
 
@@ -206,7 +206,7 @@ public class Set {
           }
       }catch (InvalidNodeException e)
       {
-          System.out.println("invalid node exception.");
+          e.printStackTrace();
       }
 
   }
