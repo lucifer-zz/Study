@@ -192,16 +192,16 @@ public class Tree234 extends IntDictionary {
   {
       if(node == root)
       {
-          splitroot(key);
+          splitroot();
       }else if(node.parent.keys == 1)
       {
-          splitnodewith1keyinparent(node, key);
+          splitnodewith1keyinparent(node);
       }else
       {
-          splitnodewith2keysinparent(node, key);
+          splitnodewith2keysinparent(node);
       }
   }
-  private void splitroot(int key)
+  private void splitroot()
   {
 
       Tree234Node rawroot = root;
@@ -222,7 +222,7 @@ public class Tree234 extends IntDictionary {
       return;
   }
 
-  private void splitnodewith1keyinparent(Tree234Node node, int key)
+  private void splitnodewith1keyinparent(Tree234Node node)
   {
       Tree234Node newnode = new Tree234Node(node.parent, node.key3);
       newnode.child1 = node.child3;
@@ -250,7 +250,7 @@ public class Tree234 extends IntDictionary {
       node.parent.keys++;
   }
 
-  private void splitnodewith2keysinparent(Tree234Node node, int key)
+  private void splitnodewith2keysinparent(Tree234Node node)
   {
       Tree234Node newnode = new Tree234Node(node.parent, node.key3);
       newnode.child1 = node.child3;
