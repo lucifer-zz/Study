@@ -257,7 +257,7 @@ public class ListSorts {
           step--;
           if(step == 0)
           {
-  //            ConverseQueue(q);
+              ConverseQueue(q);
               transfermark = true;
           }
    //
