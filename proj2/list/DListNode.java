@@ -48,7 +48,7 @@ public class DListNode extends ListNode {
     public boolean isValidNode() {
 	return myList != null;
     }
-
+  
     /**
      *  next() returns the node following this node.  If this node is invalid,
      *  throws an exception.
@@ -159,13 +159,12 @@ public class DListNode extends ListNode {
 	    //   "this" is null.  Remember that this node's "myList" field tells you
 	    //   what DList it's in.
 	    // Make this node an invalid node, so it cannot be used to corrupt myList.
+	    myList.size--;
 	    myList = null;
 	    // Set other references to null to improve garbage collection.
 	    next = null;
 	    prev = null;
 	}
     }
-
-
 
 }

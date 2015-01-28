@@ -1,6 +1,6 @@
 /* Kruskal.java */
 package graphalg;
-import java.util.Hashtable;
+
 import dict.*;
 import graph.*;
 import set.*;
